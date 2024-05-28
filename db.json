@@ -1,0 +1,41 @@
+{
+    "metrics": {
+      "collections": 150,
+      "signups": 75,
+      "revenue": 20000,
+      "bounced": 5
+    },
+    "targets": {
+      "analytics": { "target": 100, "achieved": 75 },
+      "finance": { "target": 80, "achieved": 60 },
+      "timetable": { "target": 90, "achieved": 70 }
+    },
+    "signups": {
+      "primary": { "analytics": 30, "finance": 25, "timetable": 20 },
+      "secondary": { "analytics": 25, "finance": 20, "timetable": 30 },
+      "igcse": { "analytics": 20, "finance": 15, "timetable": 20 }
+    },
+    "upcomingInvoices": [
+      { "schoolName": "School A", "amountDue": 1000, "dueDate": "2024-06-01" },
+      { "schoolName": "School B", "amountDue": 1500, "dueDate": "2024-06-05" }
+    ],
+    "schools": [
+      {
+        "id": 1,
+        "name": "School A",
+        "type": "Primary",
+        "products": ["Zeraki Analytics", "Zeraki Finance"],
+        "county": "Nairobi",
+        "registrationDate": "2023-01-10",
+        "contactInfo": "contact@schoola.com",
+        "balance": 500,
+        "invoices": [
+          { "id": 1, "item": "Zeraki Analytics", "amount": 500, "dueDate": "2024-06-01", "status": "Pending" }
+        ],
+        "collections": [
+          { "id": 1, "invoiceId": 1, "amount": 500, "date": "2024-05-20", "status": "Valid" }
+        ]
+      }
+    ]
+  }
+  
