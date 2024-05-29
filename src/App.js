@@ -1,24 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Sidebar from './components/SideBar';
+import Dashboard from './components/Dashboard';
+import Schools from './components/Schools';
+import SchoolDetails from './components/SchoolDetails';
+import Invoices from './components/Invoices';
+import Collections from './components/Collections';
 
 function App() {
+  const [selectedSchool, setSelectedSchool] = React.useState(null);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div className="flex">
+        <Sidebar />
+        <div className="flex-grow p-6">
+          <Routes>
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/schools" element={<Schools onSelectSchool={setSelectedSchool} />} />
+          </Routes>
+          {selectedSchool && (
+            <div>
+              <SchoolDetails school={selectedSchool} />
+              <Invoices schoolId={selectedSchool.id} />
+              <Collections schoolId={selectedSchool.id} />
+            </div>
+          )}
+        </div>
+      </div>
+    </Router>
   );
 }
 
