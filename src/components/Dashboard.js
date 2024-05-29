@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Card, CardContent, Typography, Grid, Paper, CircularProgress } from '@mui/material';
-import { PieChart, Pie, Cell, Tooltip, BarChart, Bar, XAxis, YAxis, Legend } from 'recharts';
+import { Pie } from 'react-chartjs-2';
+import SignupOverview from './SignupOverview';
 import { fetchMetrics, fetchTargets, fetchSignups } from '../services/api';
+import { Chart, ArcElement, Tooltip, Legend } from 'chart.js';
+
+Chart.register(ArcElement, Tooltip, Legend);
 
 const Dashboard = () => {
   const [metrics, setMetrics] = useState(null);
@@ -10,15 +14,26 @@ const Dashboard = () => {
 
   useEffect(() => {
     fetchMetrics().then(data => setMetrics(data));
-    fetchTargets().then(data =>{console.log("Fetched targets:", data); setTargets(data)});
-    fetchSignups().then(data => setSignups(data));
+    fetchTargets().then(data => setTargets(data));
+    fetchSignups().then(data => {
+      console.log("Fetched signups:", data);
+      setSignups(data);
+    });
   }, []);
 
   if (!metrics || !targets || !signups) {
     return <CircularProgress />;
   }
 
-  const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
+  const pieData = (data) => ({
+    labels: ['Target Achieved', 'Remaining Target'],
+    datasets: [
+      {
+        data: [data.achieved, data.target - data.achieved],
+        backgroundColor: ['#00C49F', '#FFBB28'],
+      },
+    ],
+  });
 
   return (
     <div className="p-6">
@@ -59,86 +74,29 @@ const Dashboard = () => {
 
         {/* Targets Visualization */}
         <Grid item xs={12} md={4}>
-        <Paper className="p-4">
+          <Paper className="p-4">
             <Typography variant="h6" component="div">Zeraki Analytics Targets</Typography>
-            <PieChart width={200} height={200}>
-            <Pie
-                data={Object.entries(targets.analytics).map(([key, value]) => ({ name: key, value: value }))}
-                dataKey="value"
-                cx="50%"
-                cy="50%"
-                outerRadius={60}
-                fill="#8884d8"
-            >
-                {Object.entries(targets.analytics).map(([key, entry], index) => (
-                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                ))}
-            </Pie>
-            <Tooltip />
-            </PieChart>
-        </Paper>
+            <Pie data={pieData(targets.analytics)} />
+          </Paper>
         </Grid>
         <Grid item xs={12} md={4}>
           <Paper className="p-4">
             <Typography variant="h6" component="div">Zeraki Finance Targets</Typography>
-            <PieChart width={200} height={200}>
-              <Pie
-                data={Object.entries(targets.finance).map(([key, value]) => ({ name: key, value: value }))}
-                dataKey="value"
-                cx="50%"
-                cy="50%"
-                outerRadius={60}
-                fill="#8884d8"
-              >
-                {Object.entries(targets.finance).map(([key, entry], index) => (
-                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                ))}
-              </Pie>
-              <Tooltip />
-            </PieChart>
+            <Pie data={pieData(targets.finance)} />
           </Paper>
         </Grid>
         <Grid item xs={12} md={4}>
           <Paper className="p-4">
             <Typography variant="h6" component="div">Zeraki Timetable Targets</Typography>
-            <PieChart width={200} height={200}>
-              <Pie
-                data={Object.entries(targets.timetable).map(([key, value]) => ({ name: key, value: value }))}
-                dataKey="value"
-                cx="50%"
-                cy="50%"
-                outerRadius={60}
-                fill="#8884d8"
-              >
-                {Object.entries(targets.timetable).map(([key, entry], index) => (
-                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                ))}
-              </Pie>
-              <Tooltip />
-            </PieChart>
+            <Pie data={pieData(targets.timetable)} />
           </Paper>
         </Grid>
 
-        {/* Signups Overview */}
+        {/* Sign-ups Overview */}
         <Grid item xs={12}>
           <Paper className="p-4">
             <Typography variant="h6" component="div">Sign-ups Overview</Typography>
-            <BarChart
-              width={600}
-              height={300}
-              data={Object.entries(signups).map(([key, value]) => ({ name: key, ...value }))}
-              margin={{
-                top: 5, right: 30, left: 20, bottom: 5,
-              }}
-            >
-              <XAxis dataKey="name" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Bar dataKey="primary" fill="#8884d8" />
-              <Bar dataKey="secondary" fill="#82ca9d" />
-              <Bar dataKey="igcse" fill="#ffc658" />
-            </BarChart>
+            <SignupOverview signups={signups} />
           </Paper>
         </Grid>
       </Grid>

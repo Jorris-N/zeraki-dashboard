@@ -6,14 +6,14 @@
       "bounced": 5
     },
     "targets": {
-      "analytics": { "target": 100, "achieved": 75 },
-      "finance": { "target": 80, "achieved": 60 },
-      "timetable": { "target": 90, "achieved": 70 }
+      "analytics": { "target": 100, "achieved": 66 },
+      "finance": { "target": 80, "achieved": 38 },
+      "timetable": { "target": 90, "achieved": 74 }
     },
     "signups": {
-      "primary": { "analytics": 30, "finance": 25, "timetable": 20 },
-      "secondary": { "analytics": 25, "finance": 20, "timetable": 30 },
-      "igcse": { "analytics": 20, "finance": 15, "timetable": 20 }
+        "analytics": { "primary": 10, "secondary": 20, "igcse": 5 },
+        "finance": { "primary": 15, "secondary": 10, "igcse": 8 },
+        "timetable": { "primary": 8, "secondary": 15, "igcse": 10 }      
     },
     "upcomingInvoices": [
       { "schoolName": "School A", "amountDue": 1000, "dueDate": "2024-06-01" },
@@ -30,10 +30,42 @@
         "contactInfo": "contact@schoola.com",
         "balance": 500,
         "invoices": [
-          { "id": 1, "item": "Zeraki Analytics", "amount": 500, "dueDate": "2024-06-01", "status": "Pending" }
+          { "id": 1, "item": "Zeraki Analytics", "amount": 8500, "dueDate": "2024-06-01", "status": "Pending" }
         ],
         "collections": [
-          { "id": 1, "invoiceId": 1, "amount": 500, "date": "2024-05-20", "status": "Valid" }
+          { "id": 1, "invoiceId": 1, "amount": 7500, "date": "2024-05-20", "status": "Valid" }
+        ]
+      },
+      {
+        "id": 2,
+        "name": "School B",
+        "type": "Secondary",
+        "products": ["Zeraki Analytics", "Zeraki Finance"],
+        "county": "Machakos",
+        "registrationDate": "2023-02-10",
+        "contactInfo": "contact@schoolb.com",
+        "balance": 500,
+        "invoices": [
+          { "id": 1, "item": "Zeraki Analytics", "amount": 2500, "dueDate": "2024-06-01", "status": "Pending" }
+        ],
+        "collections": [
+          { "id": 1, "invoiceId": 1, "amount": 3500, "date": "2024-05-20", "status": "Valid" }
+        ]
+      },
+      {
+        "id": 2,
+        "name": "School C",
+        "type": "IGCSE",
+        "products": ["Zeraki Analytics", "Zeraki Finance"],
+        "county": "Mombasa",
+        "registrationDate": "2023-03-10",
+        "contactInfo": "contact@schoolc.com",
+        "balance": 500,
+        "invoices": [
+          { "id": 1, "item": "Zeraki Analytics", "amount": 11500, "dueDate": "2024-06-09", "status": "Pending" }
+        ],
+        "collections": [
+          { "id": 1, "invoiceId": 1, "amount": 15500, "date": "2024-07-20", "status": "Valid" }
         ]
       }
     ]
