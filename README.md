@@ -1,5 +1,3 @@
-
-```markdown
 # Zeraki Dashboard Task
 
 ## Project Overview
@@ -19,6 +17,7 @@ The Sale Agent Dashboard project is a web application designed to streamline adm
    ```bash
    git clone git@github.com:Jorris-N/zeraki-dashboard.git
    ```
+
 
 2. Navigate to the project directory:
    ```bash
