@@ -1,17 +1,15 @@
-const baseUrl = '';
-
 export const fetchMetrics = async () => {
-    const response = await fetch(`${baseUrl}/.netlify/functions/mock-api/metrics`);
+    const response = await fetch('http://localhost:3001/metrics');
     return response.json();
   };
   
   export const fetchTargets = async () => {
-    const response = await fetch(`${baseUrl}/.netlify/functions/mock-api/targets`);
+    const response = await fetch('http://localhost:3001/targets');
     return response.json();
   };
   
   export const fetchSignups = async () => {
-    const response = await fetch(`${baseUrl}/.netlify/functions/mock-api/signups`);
+    const response = await fetch('http://localhost:3001/signups');
     return response.json();
   };
   
