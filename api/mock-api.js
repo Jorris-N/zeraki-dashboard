@@ -7,6 +7,7 @@
 // server.use(router);
 
 // module.exports = server;
+
 export const fetchMetrics = async () => {
     const response = await fetch('http://localhost:3001/metrics');
     return response.json();
