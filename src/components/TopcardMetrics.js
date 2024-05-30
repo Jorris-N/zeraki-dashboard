@@ -15,7 +15,7 @@ const TopcardMetrics = () => {
         {Object.entries(metrics).map(([key, value]) => (
         <Card key={key} className="bg-white shadow-md">
           <CardContent>
-            <Typography variant="h5" component="div">{key.charAt(0).toUpperCase() + key.slice(1)}</Typography>
+            <Typography className='text-center font-' variant="h5" component="div">{key.charAt(0).toUpperCase() + key.slice(1)}</Typography>
             <Typography variant="h4">{value}</Typography>
           </CardContent>
         </Card>

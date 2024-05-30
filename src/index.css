@@ -15,3 +15,36 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+.invoice-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.invoice-item {
+  background-color: white;
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.modal-box {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 32px;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+/* styles.css */
+
+.container {
+  display: flex;
+}
+
+.main-content {
+  flex-grow: 1; 
+}

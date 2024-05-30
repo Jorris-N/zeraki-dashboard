@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Card, CardContent, Typography, Grid, Paper, CircularProgress } from '@mui/material';
 import { Pie } from 'react-chartjs-2';
 import SignupOverview from './SignupOverview';
+import InvoiceList from './InvoicesList';
 import { fetchMetrics, fetchTargets, fetchSignups } from '../services/api';
 import { Chart, ArcElement, Tooltip, Legend } from 'chart.js';
 
@@ -42,7 +43,7 @@ const Dashboard = () => {
         <Grid item xs={12} md={3}>
           <Card className="bg-white shadow-md">
             <CardContent>
-              <Typography variant="h6" component="div">Collections</Typography>
+              <Typography sx={{ textAlign: 'center', fontWeight: 'semi-bold' }} variant="h6" component="div">Collections</Typography>
               <Typography variant="h4" component="div">{metrics.collections}</Typography>
             </CardContent>
           </Card>
@@ -97,6 +98,13 @@ const Dashboard = () => {
           <Paper className="p-4">
             <Typography variant="h6" component="div">Sign-ups Overview</Typography>
             <SignupOverview signups={signups} />
+          </Paper>
+        </Grid>
+
+        {/* Upcoming Invoices */}
+        <Grid item xs={12}>
+          <Paper className="p-4">
+            <InvoiceList />
           </Paper>
         </Grid>
       </Grid>

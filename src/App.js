@@ -12,9 +12,9 @@ function App() {
 
   return (
     <Router>
-      <div className="flex">
-        <Sidebar />
-        <div className="flex-grow p-6">
+      <div className="lg:flex lg:z-0 z-40">
+        <Sidebar className='fixed' />
+        <div className="lg:flex-grow p-6">
           <Routes>
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/schools" element={<Schools onSelectSchool={setSelectedSchool} />} />

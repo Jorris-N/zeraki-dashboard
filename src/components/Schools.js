@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import { useEffect, useState } from 'react';
 import { List, ListItemButton, ListItemText } from '@mui/material';
 import { fetchSchools } from '../services/api';
 
