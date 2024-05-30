@@ -77,7 +77,7 @@ const InvoiceList = () => {
           <ListItem key={invoice.id} className="invoice-item">
             <ListItemText
               primary={invoice.schoolName}
-              secondary={`Amount Due: $${invoice.amountDue}, Due Date: ${new Date(invoice.dueDate).toLocaleDateString()}`}
+              secondary={`Amount Due: Kes ${invoice.amountDue}, Due Date: ${new Date(invoice.dueDate).toLocaleDateString()}`}
             />
             <Button variant="contained" color="primary" onClick={() => handleOpen(invoice)}>Collect Payment</Button>
           </ListItem>
@@ -90,7 +90,7 @@ const InvoiceList = () => {
           {selectedInvoice && (
             <div>
               <Typography variant="body1">School: {selectedInvoice.schoolName}</Typography>
-              <Typography variant="body1">Amount Due: ${selectedInvoice.amountDue}</Typography>
+              <Typography variant="body1">Amount Due: Kes {selectedInvoice.amountDue}</Typography>
               <form>
                 <Grid container spacing={2} mt={2}>
                   <Grid item xs={12}>

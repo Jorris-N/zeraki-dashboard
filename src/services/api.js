@@ -53,27 +53,6 @@ export const fetchMetrics = async () => {
     return response.json();
   };
   
-  // export const createInvoice = async (schoolId, invoice) => {
-  //   const response = await fetch(`http://localhost:3001/schools/${schoolId}/invoices`, {
-  //     method: 'POST',
-  //     headers: { 'Content-Type': 'application/json' },
-  //     body: JSON.stringify(invoice)
-  //   });
-  //   return response.json();
-  // };
-  
-  // export const updateInvoice = async (id, updates) => {
-  //   const response = await fetch(`http://localhost:3001/invoices/${id}`, {
-  //     method: 'PATCH',
-  //     headers: { 'Content-Type': 'application/json' },
-  //     body: JSON.stringify(updates)
-  //   });
-  //   return response.json();
-  // };
-  
-  // export const deleteInvoice = async (id) => {
-  //   await fetch(`http://localhost:3001/invoices/${id}`, { method: 'DELETE' });
-  // };
   
   export const fetchCollections = async (schoolId) => {
     const response = await fetch(`http://localhost:3001/schools/${schoolId}/collections`);
