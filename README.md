@@ -65,4 +65,4 @@ Routing is managed using React Router, enabling navigation between different pag
 
 ### API Integration
 
-The project integrates with backend APIs to fetch and update data related to schools, invoices, and collections. Axios is used as the HTTP client for making API requests, allowing for efficient communication with the backend server.
+The project integrates with backend APIs to fetch and update data related to schools, invoices, and collections. FETCH is used as the HTTP client for making API requests, allowing for efficient communication with the backend server.
