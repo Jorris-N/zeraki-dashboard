@@ -16,8 +16,9 @@
         "timetable": { "primary": 8, "secondary": 15, "igcse": 10 }      
     },
     "upcomingInvoices": [
-      { "schoolName": "School A", "amountDue": 1000, "dueDate": "2024-06-01" },
-      { "schoolName": "School B", "amountDue": 1500, "dueDate": "2024-06-05" }
+      { "schoolName": "School A", "amountDue": 8500, "dueDate": "2024-06-01" },
+      { "schoolName": "School B", "amountDue": 2500, "dueDate": "2024-06-05" },
+      { "schoolName": "School C", "amountDue": 11500, "dueDate": "2024-06-09" }
     ],
     "schools": [
       {
@@ -46,7 +47,7 @@
         "contactInfo": "contact@schoolb.com",
         "balance": 500,
         "invoices": [
-          { "id": 1, "item": "Zeraki Analytics", "amount": 2500, "dueDate": "2024-06-01", "status": "Pending" }
+          { "id": 1, "item": "Zeraki Analytics", "amount": 2500, "dueDate": "2024-06-05", "status": "Pending" }
         ],
         "collections": [
           { "id": 1, "invoiceId": 1, "amount": 3500, "date": "2024-05-20", "status": "Valid" }

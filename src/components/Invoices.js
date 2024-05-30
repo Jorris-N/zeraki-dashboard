@@ -1,64 +1,141 @@
-import React from 'react';
-import { useState, useEffect } from 'react'
-import { fetchInvoices, createInvoice, updateInvoice, deleteInvoice } from '../services/api';
-import { Card, CardContent, Typography, Button, TextField, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
+import React, { useState, useEffect, useCallback } from 'react';
+import { List, ListItem, ListItemText, Typography, Button, Dialog, DialogTitle, DialogContent, TextField, MenuItem, Select, InputLabel, FormControl } from '@mui/material';
+import { fetchInvoices, createInvoice, updateInvoice, deleteInvoice, addCollection } from '../services/api';
 
 const Invoices = ({ schoolId }) => {
   const [invoices, setInvoices] = useState([]);
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [invoiceForm, setInvoiceForm] = useState({ item: '', amount: '', dueDate: '' });
+  const [filteredInvoices, setFilteredInvoices] = useState([]);
+  const [filter, setFilter] = useState('all');
+  const [openDialog, setOpenDialog] = useState(false);
+  const [newInvoiceData, setNewInvoiceData] = useState({
+    item: '',
+    amount: 0,
+    dueDate: new Date().toISOString().split('T')[0],
+  });
+  const [openCollectionDialog, setOpenCollectionDialog] = useState(false);
+  const [collectionData, setCollectionData] = useState({
+    invoiceId: '',
+    amount: 0,
+    date: new Date().toISOString().split('T')[0],
+  });
 
-  useEffect(() => {
-    fetchInvoices(schoolId).then(data => setInvoices(data));
+  const fetchInvoiceData = useCallback(async () => {
+    const data = await fetchInvoices(schoolId);
+    setInvoices(data);
+    setFilteredInvoices(data);
   }, [schoolId]);
 
-  const handleCreateInvoice = () => {
-    createInvoice(schoolId, invoiceForm).then(newInvoice => {
-      setInvoices([...invoices, newInvoice]);
-      setIsDialogOpen(false);
-    });
+  useEffect(() => {
+    fetchInvoiceData();
+  }, [fetchInvoiceData]);
+
+  const filterInvoices = useCallback(() => {
+    if (filter === 'all') {
+      setFilteredInvoices(invoices);
+    } else if (filter === 'completed') {
+      setFilteredInvoices(invoices.filter(invoice => invoice.status === 'Paid'));
+    } else {
+      setFilteredInvoices(invoices.filter(invoice => invoice.status !== 'Paid'));
+    }
+  }, [filter, invoices]);
+
+  useEffect(() => {
+    filterInvoices();
+  }, [filterInvoices]);
+
+  const handleCreateInvoice = async () => {
+    await createInvoice(schoolId, newInvoiceData);
+    fetchInvoiceData();
+    setOpenDialog(false);
+    setNewInvoiceData({ item: '', amount: 0, dueDate: new Date().toISOString().split('T')[0] });
   };
 
-  const handleUpdateInvoice = (id, updates) => {
-    updateInvoice(id, updates).then(updatedInvoice => {
-      setInvoices(invoices.map(invoice => invoice.id === id ? updatedInvoice : invoice));
-    });
+  const handleUpdateInvoice = async (invoiceId, updatedData) => {
+    await updateInvoice(schoolId, invoiceId, updatedData);
+    fetchInvoiceData();
   };
 
-  const handleDeleteInvoice = (id) => {
-    deleteInvoice(id).then(() => {
-      setInvoices(invoices.filter(invoice => invoice.id !== id));
-    });
+  const handleDeleteInvoice = async (invoiceId) => {
+    await deleteInvoice(schoolId, invoiceId);
+    fetchInvoiceData();
+  };
+
+  const handleAddCollection = async () => {
+    await addCollection(schoolId, collectionData.invoiceId, collectionData);
+    fetchInvoiceData();
+    setOpenCollectionDialog(false);
+    setCollectionData({ invoiceId: '', amount: 0, date: new Date().toISOString().split('T')[0] });
   };
 
   return (
     <div>
-      <Button variant="contained" color="primary" onClick={() => setIsDialogOpen(true)}>Add Invoice</Button>
-      <Dialog open={isDialogOpen} onClose={() => setIsDialogOpen(false)}>
-        <DialogTitle>Add Invoice</DialogTitle>
+      <Typography variant="h6" component="div">Invoices</Typography>
+      <FormControl>
+        <InputLabel>Filter</InputLabel>
+        <Select value={filter} onChange={(e) => setFilter(e.target.value)}>
+          <MenuItem value="all">All</MenuItem>
+          <MenuItem value="completed">Completed</MenuItem>
+          <MenuItem value="pending">Pending</MenuItem>
+        </Select>
+      </FormControl>
+      <Button onClick={() => setOpenDialog(true)}>Create Invoice</Button>
+
+      <List>
+        {filteredInvoices.map(invoice => (
+          <ListItem key={invoice.id}>
+            <ListItemText primary={`Invoice #: ${invoice.number}, Item: ${invoice.item}, Amount: ${invoice.amount}, Paid Amount: ${invoice.paidAmount}, Balance: ${invoice.balance}, Due Date: ${invoice.dueDate}, Status: ${invoice.status}`} />
+            <Button onClick={() => handleUpdateInvoice(invoice.id, { status: 'Paid' })}>Mark Paid</Button>
+            <Button onClick={() => handleDeleteInvoice(invoice.id)}>Delete</Button>
+            <Button onClick={() => {
+              setCollectionData({ ...collectionData, invoiceId: invoice.id });
+              setOpenCollectionDialog(true);
+            }}>Add Collection</Button>
+          </ListItem>
+        ))}
+      </List>
+
+      <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
+        <DialogTitle>Create New Invoice</DialogTitle>
         <DialogContent>
-          <TextField label="Item" value={invoiceForm.item} onChange={(e) => setInvoiceForm({ ...invoiceForm, item: e.target.value })} fullWidth />
-          <TextField label="Amount" type="number" value={invoiceForm.amount} onChange={(e) => setInvoiceForm({ ...invoiceForm, amount: e.target.value })} fullWidth />
-          <TextField label="Due Date" type="date" value={invoiceForm.dueDate} onChange={(e) => setInvoiceForm({ ...invoiceForm, dueDate: e.target.value })} fullWidth />
+          <TextField
+            label="Item"
+            value={newInvoiceData.item}
+            onChange={(e) => setNewInvoiceData({ ...newInvoiceData, item: e.target.value })}
+          />
+          <TextField
+            label="Amount"
+            type="number"
+            value={newInvoiceData.amount}
+            onChange={(e) => setNewInvoiceData({ ...newInvoiceData, amount: e.target.value })}
+          />
+          <TextField
+            label="Due Date"
+            type="date"
+            value={newInvoiceData.dueDate}
+            onChange={(e) => setNewInvoiceData({ ...newInvoiceData, dueDate: e.target.value })}
+          />
+          <Button onClick={handleCreateInvoice}>Create</Button>
         </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setIsDialogOpen(false)}>Cancel</Button>
-          <Button onClick={handleCreateInvoice}>Add</Button>
-        </DialogActions>
       </Dialog>
 
-      {invoices.map(invoice => (
-        <Card key={invoice.id} className="bg-white shadow-md mt-4">
-          <CardContent>
-            <Typography variant="h6" component="div">{invoice.item}</Typography>
-            <Typography variant="body2">Amount: {invoice.amount}</Typography>
-            <Typography variant="body2">Due Date: {invoice.dueDate}</Typography>
-            <Typography variant="body2">Status: {invoice.status}</Typography>
-            <Button variant="contained" color="secondary" onClick={() => handleUpdateInvoice(invoice.id, { status: 'Paid' })}>Mark as Paid</Button>
-            <Button variant="contained" color="error" onClick={() => handleDeleteInvoice(invoice.id)}>Delete</Button>
-          </CardContent>
-        </Card>
-      ))}
+      <Dialog open={openCollectionDialog} onClose={() => setOpenCollectionDialog(false)}>
+        <DialogTitle>Add Collection</DialogTitle>
+        <DialogContent>
+          <TextField
+            label="Amount"
+            type="number"
+            value={collectionData.amount}
+            onChange={(e) => setCollectionData({ ...collectionData, amount: e.target.value })}
+          />
+          <TextField
+            label="Date"
+            type="date"
+            value={collectionData.date}
+            onChange={(e) => setCollectionData({ ...collectionData, date: e.target.value })}
+          />
+          <Button onClick={handleAddCollection}>Add Collection</Button>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

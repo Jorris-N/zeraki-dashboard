@@ -1,9 +1,8 @@
-import React from 'react'
+import React from 'react';
 import { Card, CardContent, Typography, List, ListItem, ListItemText } from '@mui/material';
 
-const SchoolDetails = ({ school }) => {
-  return (
-    <Card className="bg-white shadow-md">
+const SchoolDetails = ({ school }) => (
+  <Card className="bg-white shadow-md">
     <CardContent>
       <Typography variant="h5" component="div">{school.name}</Typography>
       <Typography variant="body2">Type: {school.type}</Typography>
@@ -32,7 +31,6 @@ const SchoolDetails = ({ school }) => {
       </List>
     </CardContent>
   </Card>
-  )
-}
+);
 
-export default SchoolDetails
+export default SchoolDetails;
