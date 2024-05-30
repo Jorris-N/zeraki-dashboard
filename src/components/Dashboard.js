@@ -42,33 +42,33 @@ const Dashboard = () => {
         {/* Top Card Metrics */}
         <Grid item xs={12} md={3}>
           <Card className="bg-white shadow-md">
-            <CardContent>
-              <Typography sx={{ textAlign: 'center', fontWeight: 'semi-bold' }} variant="h6" component="div">Collections</Typography>
-              <Typography variant="h4" component="div">{metrics.collections}</Typography>
+            <CardContent className='space-y-2'>
+              <Typography sx={{ textAlign: 'center', fontWeight: 'semi-bold', fontSize: '18px' }} variant="p" component="div">Collections</Typography>
+              <Typography sx={{ textAlign: 'center', fontWeight: 'bold' }} variant="h5" component="div">{metrics.collections}</Typography>
             </CardContent>
           </Card>
         </Grid>
         <Grid item xs={12} md={3}>
           <Card className="bg-white shadow-md">
-            <CardContent>
-              <Typography variant="h6" component="div">Sign-ups</Typography>
-              <Typography variant="h4" component="div">{metrics.signups}</Typography>
+            <CardContent className='space-y-2'>
+              <Typography sx={{ textAlign: 'center', fontWeight: 'semi-bold', fontSize: '18px' }} variant="p" component="div">Sign-ups</Typography>
+              <Typography sx={{ textAlign: 'center', fontWeight: 'bold' }} variant="h5" component="div">{metrics.signups}</Typography>
             </CardContent>
           </Card>
         </Grid>
         <Grid item xs={12} md={3}>
           <Card className="bg-white shadow-md">
-            <CardContent>
-              <Typography variant="h6" component="div">Total Revenue</Typography>
-              <Typography variant="h4" component="div">${metrics.revenue}</Typography>
+            <CardContent className='space-y-2'>
+              <Typography sx={{ textAlign: 'center', fontWeight: 'semi-bold', fontSize: '18px' }} variant="p" component="div">Total Revenue</Typography>
+              <Typography sx={{ textAlign: 'center', fontWeight: 'bold' }} variant="h5" component="div">Kes {metrics.revenue}</Typography>
             </CardContent>
           </Card>
         </Grid>
         <Grid item xs={12} md={3}>
           <Card className="bg-white shadow-md">
-            <CardContent>
-              <Typography variant="h6" component="div">Bounced Cheques</Typography>
-              <Typography variant="h4" component="div">{metrics.bounced}</Typography>
+            <CardContent className='space-y-2'>
+              <Typography sx={{ textAlign: 'center', fontWeight: 'semi-bold', fontSize: '18px' }} variant="p" component="div">Bounced Cheques</Typography>
+              <Typography sx={{ textAlign: 'center', fontWeight: 'bold' }} variant="h5" component="div">{metrics.bounced}</Typography>
             </CardContent>
           </Card>
         </Grid>

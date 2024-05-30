@@ -16,7 +16,7 @@ const SchoolDetails = ({ school }) => (
       <List>
         {school.invoices.map(invoice => (
           <ListItem key={invoice.id}>
-            <ListItemText primary={`Item: ${invoice.item}, Amount: ${invoice.amount}, Due: ${invoice.dueDate}, Status: ${invoice.status}`} />
+            <ListItemText primary={`Item: ${invoice.item}, Amount: Kes ${invoice.amount}, Due: ${invoice.dueDate}, Status: ${invoice.status}`} />
           </ListItem>
         ))}
       </List>
@@ -25,7 +25,7 @@ const SchoolDetails = ({ school }) => (
       <List>
         {school.collections.map(collection => (
           <ListItem key={collection.id}>
-            <ListItemText primary={`Invoice ID: ${collection.invoiceId}, Amount: ${collection.amount}, Date: ${collection.date}, Status: ${collection.status}`} />
+            <ListItemText primary={`Invoice ID: ${collection.invoiceId}, Amount: Kes ${collection.amount}, Date: ${collection.date}, Status: ${collection.status}`} />
           </ListItem>
         ))}
       </List>
