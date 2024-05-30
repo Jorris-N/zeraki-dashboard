@@ -1,37 +1,37 @@
-const baseUrl = '';
+const baseUrl = 'https://zeraki-dashboard.netlify.app/';
 
 export const fetchMetrics = async () => {
-    const response = await fetch(`${baseUrl}/api/data/metrics`);
+    const response = await fetch(`${baseUrl}/metrics`);
     return response.json();
 };
 
 export const fetchTargets = async () => {
-    const response = await fetch(`${baseUrl}/api/data/targets`);
+    const response = await fetch(`${baseUrl}/targets`);
     return response.json();
 };
 
 export const fetchSignups = async () => {
-    const response = await fetch(`${baseUrl}/api/data/signups`);
+    const response = await fetch(`${baseUrl}/signups`);
     return response.json();
 };
 
 export const fetchUpcomingInvoices = async () => {
-    const response = await fetch(`${baseUrl}/api/data/upcomingInvoices`);
+    const response = await fetch(`${baseUrl}/upcomingInvoices`);
     return response.json();
 };
 
 export const fetchSchools = async () => {
-    const response = await fetch(`${baseUrl}/api/data/schools`);
+    const response = await fetch(`${baseUrl}/schools`);
     return response.json();
 };
 
 export const fetchInvoices = async (schoolId) => {
-    const response = await fetch(`${baseUrl}/api/data/schools/${schoolId}/invoices`);
+    const response = await fetch(`${baseUrl}/schools/${schoolId}/invoices`);
     return response.json();
 };
 
 export const createInvoice = async (schoolId, invoiceData) => {
-    const response = await fetch(`${baseUrl}/api/data/schools/${schoolId}/invoices`, {
+    const response = await fetch(`${baseUrl}/schools/${schoolId}/invoices`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(invoiceData),
@@ -40,7 +40,7 @@ export const createInvoice = async (schoolId, invoiceData) => {
 };
 
 export const updateInvoice = async (schoolId, invoiceId, updatedData) => {
-    const response = await fetch(`${baseUrl}/api/data/schools/${schoolId}/invoices/${invoiceId}`, {
+    const response = await fetch(`${baseUrl}/schools/${schoolId}/invoices/${invoiceId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(updatedData),
@@ -49,28 +49,28 @@ export const updateInvoice = async (schoolId, invoiceId, updatedData) => {
 };
 
 export const deleteInvoice = async (schoolId, invoiceId) => {
-    const response = await fetch(`${baseUrl}/api/data/schools/${schoolId}/invoices/${invoiceId}`, {
+    const response = await fetch(`${baseUrl}/schools/${schoolId}/invoices/${invoiceId}`, {
         method: 'DELETE',
     });
     return response.json();
 };
 
 export const fetchCollections = async (schoolId) => {
-    const response = await fetch(`${baseUrl}/api/data/schools/${schoolId}/collections`);
+    const response = await fetch(`${baseUrl}/schools/${schoolId}/collections`);
     return response.json();
 };
 
 export const updateCollectionStatus = async (id, status) => {
-    const response = await fetch(`${baseUrl}/api/data/collections/${id}`, {
+    const response = await fetch(`${baseUrl}/collections/${id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ status })
+        body: JSON.stringify({ status }),
     });
     return response.json();
 };
 
 export const addCollection = async (schoolId, invoiceId, collectionData) => {
-    const response = await fetch(`${baseUrl}/api/data/schools/${schoolId}/invoices/${invoiceId}/collections`, {
+    const response = await fetch(`${baseUrl}/schools/${schoolId}/invoices/${invoiceId}/collections`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(collectionData),
